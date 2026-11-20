@@ -1,0 +1,40 @@
+name: Go tests
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  shift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: shift/go.mod
+          cache: false
+      - run: go test -v ./...
+        working-directory: shift
+
+  order:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: order/go.mod
+          cache: false
+      - run: go test -v ./...
+        working-directory: order
+
+  delivery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: delivery/go.mod
+          cache: false
+      - run: go test -v ./...
+        working-directory: delivery
